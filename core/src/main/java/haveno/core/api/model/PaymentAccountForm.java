@@ -114,7 +114,8 @@ public final class PaymentAccountForm implements PersistablePayload {
         TIKKIE,
         UPI,
         VERSE,
-        WESTERN_UNION;
+        WESTERN_UNION,
+        BLOCK_CHAINS_INSTANT;
 
         public static PaymentAccountForm.FormId fromProto(protobuf.PaymentAccountForm.FormId formId) {
             return ProtoUtil.enumFromProto(PaymentAccountForm.FormId.class, formId.name());

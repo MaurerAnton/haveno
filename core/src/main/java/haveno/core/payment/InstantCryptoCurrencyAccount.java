@@ -34,6 +34,13 @@ public final class InstantCryptoCurrencyAccount extends AssetAccount {
 
     public static final List<TradeCurrency> SUPPORTED_CURRENCIES = new ArrayList<>(CurrencyUtil.getAllSortedCryptoCurrencies());
 
+    private static final List<PaymentAccountFormField.FieldId> INPUT_FIELD_IDS = List.of(
+            PaymentAccountFormField.FieldId.ACCOUNT_NAME,
+            PaymentAccountFormField.FieldId.TRADE_CURRENCIES,
+            PaymentAccountFormField.FieldId.ADDRESS,
+            PaymentAccountFormField.FieldId.SALT
+    );
+
     public InstantCryptoCurrencyAccount() {
         super(PaymentMethod.BLOCK_CHAINS_INSTANT);
     }
@@ -50,6 +57,6 @@ public final class InstantCryptoCurrencyAccount extends AssetAccount {
 
     @Override
     public @NonNull List<PaymentAccountFormField.FieldId> getInputFieldIds() {
-        throw new RuntimeException("Not implemented");
+        return INPUT_FIELD_IDS;
     }
 }

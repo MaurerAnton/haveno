@@ -347,66 +347,8 @@ public final class PaymentMethod implements PersistablePayload, Comparable<Payme
             BLOCK_CHAINS_INSTANT = new PaymentMethod(BLOCK_CHAINS_INSTANT_ID, TimeUnit.HOURS.toMillis(1), DEFAULT_TRADE_LIMIT_CRYPTO, Arrays.asList())
     );
 
-    // TODO: delete this override method, which overrides the paymentMethods variable, when all payment methods supported using structured form api, and make paymentMethods private
     public static List<PaymentMethod> getPaymentMethods() {
-        List<String> paymentMethodIds = List.of(
-                ACH_TRANSFER_ID,
-                ADVANCED_CASH_ID,
-                ALI_PAY_ID,
-                AMAZON_GIFT_CARD_ID,
-                AUSTRALIA_PAYID_ID,
-                BIZUM_ID,
-                BLOCK_CHAINS_ID,
-                CAPITUAL_ID,
-                CASH_APP_ID,
-                CASH_AT_ATM_ID,
-                CASH_DEPOSIT_ID,
-                CELPAY_ID,
-                DOMESTIC_WIRE_TRANSFER_ID,
-                F2F_ID,
-                FASTER_PAYMENTS_ID,
-                HAL_CASH_ID,
-                IMPS_ID,
-                INTERAC_E_TRANSFER_ID,
-                JAPAN_BANK_ID,
-                MONESE_ID,
-                MONEY_BEAM_ID,
-                MONEY_GRAM_ID,
-                NATIONAL_BANK_ID,
-                NEFT_ID,
-                NEQUI_ID,
-                PAYPAL_ID,
-                PAYSAFE_ID,
-                PAYSERA_ID,
-                PAYTM_ID,
-                PAXUM_ID,
-                PAY_BY_MAIL_ID,
-                PERFECT_MONEY_ID,
-                PIX_ID,
-                POPMONEY_ID,
-                PROMPT_PAY_ID,
-                REVOLUT_ID,
-                RTGS_ID,
-                SAME_BANK_ID,
-                SATISPAY_ID,
-                SEPA_ID,
-                SEPA_INSTANT_ID,
-                SPECIFIC_BANKS_ID,
-                STRIKE_ID,
-                SWIFT_ID,
-                SWISH_ID,
-                TIKKIE_ID,
-                TRANSFERWISE_ID,
-                TRANSFERWISE_USD_ID,
-                UPHOLD_ID,
-                UPI_ID,
-                US_POSTAL_MONEY_ORDER_ID,
-                VENMO_ID,
-                VERSE_ID,
-                WECHAT_PAY_ID,
-                WESTERN_UNION_ID,
-                ZELLE_ID);
-        return paymentMethods.stream().filter(paymentMethod -> paymentMethodIds.contains(paymentMethod.getId())).collect(Collectors.toList());
+        return new ArrayList<>(paymentMethods);
     }
 
     private static List<String> getAssetCodes(List<TradeCurrency> tradeCurrencies) {

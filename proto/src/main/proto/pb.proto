@@ -1952,6 +1952,7 @@ message PaymentAccountForm {
         UPI = 53;
         VERSE = 54;
         WESTERN_UNION = 55;
+        BLOCK_CHAINS_INSTANT = 56;
     }
     FormId id = 1;
     repeated PaymentAccountFormField fields = 2;
@@ -2019,6 +2020,7 @@ message PaymentAccountFormField {
         USERNAME = 57;
         EMAIL_OR_MOBILE_NR_OR_USERNAME = 58;
         EMAIL_OR_MOBILE_NR_OR_CASHTAG = 59;
+        VIRTUAL_PAYMENT_ADDRESS = 60;
     }
     enum Component {
         TEXT = 0;

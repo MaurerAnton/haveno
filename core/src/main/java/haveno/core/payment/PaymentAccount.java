@@ -442,7 +442,8 @@ public abstract class PaymentAccount implements PersistablePayload {
             processValidationResult(new LengthValidator(2, 100).validate(value));
             break;
         case ANSWER:
-            throw new IllegalArgumentException("Not implemented");
+            processValidationResult(new LengthValidator(2, 100).validate(value));
+            break;
         case BANK_ACCOUNT_NAME:
             processValidationResult(new LengthValidator(2, 100).validate(value));
             break;
@@ -569,7 +570,8 @@ public abstract class PaymentAccount implements PersistablePayload {
             processValidationResult(new LengthValidator(2, 100).validate(value));
             break;
         case QUESTION:
-            throw new IllegalArgumentException("Not implemented");
+            processValidationResult(new LengthValidator(2, 100).validate(value));
+            break;
         case REQUIREMENTS:
             break;
         case SALT:
@@ -602,6 +604,9 @@ public abstract class PaymentAccount implements PersistablePayload {
             processValidationResult(new LengthValidator(3, 100).validate(value));
             break;
         case EMAIL_OR_MOBILE_NR_OR_CASHTAG:
+            processValidationResult(new LengthValidator(3, 100).validate(value));
+            break;
+        case VIRTUAL_PAYMENT_ADDRESS:
             processValidationResult(new LengthValidator(3, 100).validate(value));
             break;
         case ADDRESS:
@@ -732,9 +737,11 @@ public abstract class PaymentAccount implements PersistablePayload {
         case CITY:
             field.setComponent(PaymentAccountFormField.Component.TEXT);
             field.setLabel(Res.get("payment.account.city"));
+            break;
         case CONTACT:
             field.setComponent(PaymentAccountFormField.Component.TEXT);
             field.setLabel(Res.get("payment.payByMail.contact"));
+            break;
         case COUNTRY:
             field.setComponent(PaymentAccountFormField.Component.SELECT_ONE);
             field.setLabel(Res.get("shared.country"));
@@ -870,6 +877,12 @@ public abstract class PaymentAccount implements PersistablePayload {
         case EMAIL_OR_MOBILE_NR_OR_CASHTAG:
             field.setComponent(PaymentAccountFormField.Component.TEXT);
             field.setLabel(Res.get("payment.email.mobile.cashtag"));
+            field.setMinLength(3);
+            field.setMaxLength(100);
+            break;
+        case VIRTUAL_PAYMENT_ADDRESS:
+            field.setComponent(PaymentAccountFormField.Component.TEXT);
+            field.setLabel(Res.get("payment.upi.virtualPaymentAddress"));
             field.setMinLength(3);
             field.setMaxLength(100);
             break;
