@@ -33,6 +33,13 @@ public final class TikkieAccount extends CountryBasedPaymentAccount {
 
     public static final List<TradeCurrency> SUPPORTED_CURRENCIES = List.of(new TraditionalCurrency("EUR"));
 
+    private static final List<PaymentAccountFormField.FieldId> INPUT_FIELD_IDS = List.of(
+            PaymentAccountFormField.FieldId.ACCOUNT_NAME,
+            PaymentAccountFormField.FieldId.COUNTRY,
+            PaymentAccountFormField.FieldId.IBAN,
+            PaymentAccountFormField.FieldId.SALT
+    );
+
     public TikkieAccount() {
         super(PaymentMethod.TIKKIE);
         // this payment method is only for Netherlands/EUR
@@ -42,6 +49,16 @@ public final class TikkieAccount extends CountryBasedPaymentAccount {
     @Override
     protected PaymentAccountPayload createPayload() {
         return new TikkieAccountPayload(paymentMethod.getId(), id);
+    }
+
+    @Override
+    public @NotNull List<TradeCurrency> getSupportedCurrencies() {
+        return SUPPORTED_CURRENCIES;
+    }
+
+    @Override
+    public @NotNull List<PaymentAccountFormField.FieldId> getInputFieldIds() {
+        return INPUT_FIELD_IDS;
     }
 
     public void setIban(String iban) {
@@ -65,15 +82,5 @@ public final class TikkieAccount extends CountryBasedPaymentAccount {
     @Override
     public String getMessageForAccountCreation() {
         return "payment.tikkie.info.account";
-    }
-
-    @Override
-    public @NotNull List<TradeCurrency> getSupportedCurrencies() {
-        return SUPPORTED_CURRENCIES;
-    }
-
-    @Override
-    public @NotNull List<PaymentAccountFormField.FieldId> getInputFieldIds() {
-        throw new RuntimeException("Not implemented");
     }
 }

@@ -34,6 +34,17 @@ public final class DomesticWireTransferAccount extends CountryBasedPaymentAccoun
 
     public static final List<TradeCurrency> SUPPORTED_CURRENCIES = List.of(new TraditionalCurrency("USD"));
 
+    private static final List<PaymentAccountFormField.FieldId> INPUT_FIELD_IDS = List.of(
+            PaymentAccountFormField.FieldId.ACCOUNT_NAME,
+            PaymentAccountFormField.FieldId.COUNTRY,
+            PaymentAccountFormField.FieldId.HOLDER_NAME,
+            PaymentAccountFormField.FieldId.HOLDER_ADDRESS,
+            PaymentAccountFormField.FieldId.BANK_NAME,
+            PaymentAccountFormField.FieldId.BRANCH_ID,
+            PaymentAccountFormField.FieldId.ACCOUNT_NR,
+            PaymentAccountFormField.FieldId.SALT
+    );
+
     public DomesticWireTransferAccount() {
         super(PaymentMethod.DOMESTIC_WIRE_TRANSFER);
     }
@@ -41,6 +52,16 @@ public final class DomesticWireTransferAccount extends CountryBasedPaymentAccoun
     @Override
     protected PaymentAccountPayload createPayload() {
         return new DomesticWireTransferAccountPayload(paymentMethod.getId(), id);
+    }
+
+    @Override
+    public @NonNull List<TradeCurrency> getSupportedCurrencies() {
+        return SUPPORTED_CURRENCIES;
+    }
+
+    @Override
+    public @NonNull List<PaymentAccountFormField.FieldId> getInputFieldIds() {
+        return INPUT_FIELD_IDS;
     }
 
     @Override
@@ -70,15 +91,5 @@ public final class DomesticWireTransferAccount extends CountryBasedPaymentAccoun
     @Override
     public String getMessageForAccountCreation() {
         return "payment.domesticWire.info.account";
-    }
-
-    @Override
-    public @NonNull List<TradeCurrency> getSupportedCurrencies() {
-        return SUPPORTED_CURRENCIES;
-    }
-
-    @Override
-    public @NonNull List<PaymentAccountFormField.FieldId> getInputFieldIds() {
-        throw new RuntimeException("Not implemented");
     }
 }

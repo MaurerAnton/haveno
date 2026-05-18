@@ -33,6 +33,14 @@ public final class SatispayAccount extends CountryBasedPaymentAccount {
 
     public static final List<TradeCurrency> SUPPORTED_CURRENCIES = List.of(new TraditionalCurrency("EUR"));
 
+    private static final List<PaymentAccountFormField.FieldId> INPUT_FIELD_IDS = List.of(
+            PaymentAccountFormField.FieldId.ACCOUNT_NAME,
+            PaymentAccountFormField.FieldId.COUNTRY,
+            PaymentAccountFormField.FieldId.HOLDER_NAME,
+            PaymentAccountFormField.FieldId.MOBILE_NR,
+            PaymentAccountFormField.FieldId.SALT
+    );
+
     public SatispayAccount() {
         super(PaymentMethod.SATISPAY);
     }
@@ -40,6 +48,16 @@ public final class SatispayAccount extends CountryBasedPaymentAccount {
     @Override
     protected PaymentAccountPayload createPayload() {
         return new SatispayAccountPayload(paymentMethod.getId(), id);
+    }
+
+    @Override
+    public @NonNull List<TradeCurrency> getSupportedCurrencies() {
+        return SUPPORTED_CURRENCIES;
+    }
+
+    @Override
+    public @NonNull List<PaymentAccountFormField.FieldId> getInputFieldIds() {
+        return INPUT_FIELD_IDS;
     }
 
     public void setHolderName(String accountId) {
@@ -71,15 +89,5 @@ public final class SatispayAccount extends CountryBasedPaymentAccount {
     @Override
     public String getMessageForAccountCreation() {
         return "payment.satispay.info.account";
-    }
-
-    @Override
-    public @NonNull List<TradeCurrency> getSupportedCurrencies() {
-        return SUPPORTED_CURRENCIES;
-    }
-
-    @Override
-    public @NonNull List<PaymentAccountFormField.FieldId> getInputFieldIds() {
-        throw new RuntimeException("Not implemented");
     }
 }

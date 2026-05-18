@@ -447,9 +447,11 @@ public abstract class PaymentAccount implements PersistablePayload {
             processValidationResult(new LengthValidator(2, 100).validate(value));
             break;
         case BANK_ACCOUNT_NUMBER:
-            throw new IllegalArgumentException("Not implemented");
+            processValidationResult(new LengthValidator(2, 100).validate(value));
+            break;
         case BANK_ACCOUNT_TYPE:
-            throw new IllegalArgumentException("Not implemented");
+            processValidationResult(new LengthValidator(2, 100).validate(value));
+            break;
         case BANK_ADDRESS:
         case INTERMEDIARY_ADDRESS:
             processValidationResult(new LengthValidator(1, 100).validate(value));
@@ -459,16 +461,20 @@ public abstract class PaymentAccount implements PersistablePayload {
             processValidationResult(new LengthValidator(2, 34).validate(value));
             break;
         case BANK_BRANCH_CODE:
-            throw new IllegalArgumentException("Not implemented");
+            processValidationResult(new LengthValidator(2, 34).validate(value));
+            break;
         case BANK_BRANCH_NAME:
-            throw new IllegalArgumentException("Not implemented");
+            processValidationResult(new LengthValidator(2, 100).validate(value));
+            break;
         case BANK_CODE:
-            throw new IllegalArgumentException("Not implemented");
+            processValidationResult(new LengthValidator(2, 34).validate(value));
+            break;
         case BANK_COUNTRY_CODE:
             if (!CountryUtil.findCountryByCode(value).isPresent()) throw new IllegalArgumentException("Invalid country code: " + value);
             break;
         case BANK_ID:
-            throw new IllegalArgumentException("Not implemented");
+            processValidationResult(new LengthValidator(2, 100).validate(value));
+            break;
         case BANK_NAME:
         case INTERMEDIARY_NAME:
             processValidationResult(new LengthValidator(2, 34).validate(value));
@@ -527,24 +533,29 @@ public abstract class PaymentAccount implements PersistablePayload {
             processValidationResult(new LengthValidator(0, 100).validate(value));
             break;
         case HOLDER_EMAIL:
-            throw new IllegalArgumentException("Not implemented");
+            processValidationResult(new EmailValidator().validate(value));
+            break;
         case HOLDER_NAME:
             processValidationResult(new LengthValidator(2, 100).validate(value));
             break;
         case HOLDER_TAX_ID:
-            throw new IllegalArgumentException("Not implemented");
+            processValidationResult(new LengthValidator(2, 100).validate(value));
+            break;
         case IBAN:
             processValidationResult(new IBANValidator().validate(value));
             break;
         case IFSC:
-            throw new IllegalArgumentException("Not implemented");
+            processValidationResult(new LengthValidator(11, 11).validate(value));
+            break;
         case INTERMEDIARY_COUNTRY_CODE:
             if (!CountryUtil.findCountryByCode(value).isPresent()) throw new IllegalArgumentException("Invalid country code: " + value);
             break;
         case MOBILE_NR:
-            throw new IllegalArgumentException("Not implemented");
+            processValidationResult(new InputValidator().validate(value));
+            break;
         case NATIONAL_ACCOUNT_ID:
-            throw new IllegalArgumentException("Not implemented");
+            processValidationResult(new LengthValidator(2, 100).validate(value));
+            break;
         case PAYID:
             processValidationResult(new LengthValidator(2, 100).validate(value));
             break;
@@ -555,11 +566,12 @@ public abstract class PaymentAccount implements PersistablePayload {
             processValidationResult(new InputValidator().validate(value));
             break;
         case PROMPT_PAY_ID:
-            throw new IllegalArgumentException("Not implemented");
+            processValidationResult(new LengthValidator(2, 100).validate(value));
+            break;
         case QUESTION:
             throw new IllegalArgumentException("Not implemented");
         case REQUIREMENTS:
-            throw new IllegalArgumentException("Not implemented");
+            break;
         case SALT:
             if (!value.equals("")) throw new IllegalArgumentException("Salt must be empty");
             break;
@@ -646,9 +658,13 @@ public abstract class PaymentAccount implements PersistablePayload {
             field.setMaxLength(100);
             break;
         case BANK_ACCOUNT_NUMBER:
-            throw new IllegalArgumentException("Not implemented");
+            field.setComponent(PaymentAccountFormField.Component.TEXT);
+            field.setLabel(Res.get("payment.accountNr"));
+            break;
         case BANK_ACCOUNT_TYPE:
-            throw new IllegalArgumentException("Not implemented");
+            field.setComponent(PaymentAccountFormField.Component.SELECT_ONE);
+            field.setLabel(Res.get("payment.select.account"));
+            break;
         case BANK_ADDRESS:
             field.setComponent(PaymentAccountFormField.Component.TEXTAREA);
             field.setLabel(Res.get("payment.swift.address.bank"));
@@ -662,15 +678,21 @@ public abstract class PaymentAccount implements PersistablePayload {
             field.setLabel(Res.get("payment.swift.swiftCode.bank"));
             break;
         case BANK_BRANCH_NAME:
-            throw new IllegalArgumentException("Not implemented");
+            field.setComponent(PaymentAccountFormField.Component.TEXT);
+            field.setLabel(Res.get("payment.branch"));
+            break;
         case BANK_CODE:
-            throw new IllegalArgumentException("Not implemented");
+            field.setComponent(PaymentAccountFormField.Component.TEXT);
+            field.setLabel(Res.get("payment.bankCode"));
+            break;
         case BANK_COUNTRY_CODE:
             field.setComponent(PaymentAccountFormField.Component.SELECT_ONE);
             field.setLabel(Res.get("payment.bank.country"));
             break;
         case BANK_ID:
-            throw new IllegalArgumentException("Not implemented");
+            field.setComponent(PaymentAccountFormField.Component.TEXT);
+            field.setLabel(Res.get("payment.bankId"));
+            break;
         case BANK_NAME:
             field.setComponent(PaymentAccountFormField.Component.TEXT);
             field.setLabel(Res.get("payment.swift.name.bank"));
@@ -736,7 +758,10 @@ public abstract class PaymentAccount implements PersistablePayload {
             field.setLabel(Res.get("payment.account.owner.address"));
             break;
         case HOLDER_EMAIL:
-            throw new IllegalArgumentException("Not implemented");
+            field.setComponent(PaymentAccountFormField.Component.TEXT);
+            field.setType("email");
+            field.setLabel(Res.get("payment.email"));
+            break;
         case HOLDER_NAME:
             field.setComponent(PaymentAccountFormField.Component.TEXT);
             field.setLabel(Res.get("payment.account.owner.fullname"));
@@ -744,13 +769,17 @@ public abstract class PaymentAccount implements PersistablePayload {
             field.setMaxLength(100);
             break;
         case HOLDER_TAX_ID:
-            throw new IllegalArgumentException("Not implemented");
+            field.setComponent(PaymentAccountFormField.Component.TEXT);
+            field.setLabel(Res.get("payment.taxId"));
+            break;
         case IBAN:
             field.setComponent(PaymentAccountFormField.Component.TEXT);
             field.setLabel("IBAN");
             break;
         case IFSC:
-            throw new IllegalArgumentException("Not implemented");
+            field.setComponent(PaymentAccountFormField.Component.TEXT);
+            field.setLabel("IFSC");
+            break;
         case INTERMEDIARY_ADDRESS:
             field.setComponent(PaymentAccountFormField.Component.TEXTAREA);
             field.setLabel(Res.get("payment.swift.address.intermediary"));
@@ -776,7 +805,9 @@ public abstract class PaymentAccount implements PersistablePayload {
             field.setLabel(Res.get("payment.mobile"));
             break;
         case NATIONAL_ACCOUNT_ID:
-            throw new IllegalArgumentException("Not implemented");
+            field.setComponent(PaymentAccountFormField.Component.TEXT);
+            field.setLabel(Res.get("payment.nationalAccountId"));
+            break;
         case PAYID:
             field.setComponent(PaymentAccountFormField.Component.TEXT);
             field.setLabel(Res.get("payment.email.mobile"));
@@ -790,13 +821,17 @@ public abstract class PaymentAccount implements PersistablePayload {
             field.setLabel(Res.get("payment.postal.address"));
             break;
         case PROMPT_PAY_ID:
-            throw new IllegalArgumentException("Not implemented");
+            field.setComponent(PaymentAccountFormField.Component.TEXT);
+            field.setLabel("PromptPay ID");
+            break;
         case QUESTION:
             field.setComponent(PaymentAccountFormField.Component.TEXT);
             field.setLabel(Res.get("payment.secret"));
             break;
         case REQUIREMENTS:
-            throw new IllegalArgumentException("Not implemented");
+            field.setComponent(PaymentAccountFormField.Component.TEXTAREA);
+            field.setLabel(Res.get("payment.shared.extraInfo"));
+            break;
         case SALT:
             field.setComponent(PaymentAccountFormField.Component.TEXT);
             field.setLabel("Salt");

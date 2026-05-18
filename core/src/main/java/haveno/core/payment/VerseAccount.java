@@ -40,6 +40,13 @@ public final class VerseAccount extends PaymentAccount {
             new TraditionalCurrency("SEK")
     );
 
+    private static final List<PaymentAccountFormField.FieldId> INPUT_FIELD_IDS = List.of(
+            PaymentAccountFormField.FieldId.ACCOUNT_NAME,
+            PaymentAccountFormField.FieldId.HOLDER_NAME,
+            PaymentAccountFormField.FieldId.TRADE_CURRENCIES,
+            PaymentAccountFormField.FieldId.SALT
+    );
+
     public VerseAccount() {
         super(PaymentMethod.VERSE);
     }
@@ -47,6 +54,16 @@ public final class VerseAccount extends PaymentAccount {
     @Override
     protected PaymentAccountPayload createPayload() {
         return new VerseAccountPayload(paymentMethod.getId(), id);
+    }
+
+    @Override
+    public @NonNull List<TradeCurrency> getSupportedCurrencies() {
+        return SUPPORTED_CURRENCIES;
+    }
+
+    @Override
+    public @NonNull List<PaymentAccountFormField.FieldId> getInputFieldIds() {
+        return INPUT_FIELD_IDS;
     }
 
     public void setHolderName(String accountId) {
@@ -70,15 +87,5 @@ public final class VerseAccount extends PaymentAccount {
     @Override
     public String getMessageForAccountCreation() {
         return "payment.verse.info.account";
-    }
-
-    @Override
-    public @NonNull List<TradeCurrency> getSupportedCurrencies() {
-        return SUPPORTED_CURRENCIES;
-    }
-
-    @Override
-    public @NonNull List<PaymentAccountFormField.FieldId> getInputFieldIds() {
-        throw new RuntimeException("Not implemented");
     }
 }

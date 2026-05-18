@@ -33,6 +33,13 @@ public final class BizumAccount extends CountryBasedPaymentAccount {
 
     public static final List<TradeCurrency> SUPPORTED_CURRENCIES = List.of(new TraditionalCurrency("EUR"));
 
+    private static final List<PaymentAccountFormField.FieldId> INPUT_FIELD_IDS = List.of(
+            PaymentAccountFormField.FieldId.ACCOUNT_NAME,
+            PaymentAccountFormField.FieldId.COUNTRY,
+            PaymentAccountFormField.FieldId.MOBILE_NR,
+            PaymentAccountFormField.FieldId.SALT
+    );
+
     public BizumAccount() {
         super(PaymentMethod.BIZUM);
     }
@@ -40,6 +47,16 @@ public final class BizumAccount extends CountryBasedPaymentAccount {
     @Override
     protected PaymentAccountPayload createPayload() {
         return new BizumAccountPayload(paymentMethod.getId(), id);
+    }
+
+    @Override
+    public @NonNull List<TradeCurrency> getSupportedCurrencies() {
+        return SUPPORTED_CURRENCIES;
+    }
+
+    @Override
+    public @NonNull List<PaymentAccountFormField.FieldId> getInputFieldIds() {
+        return INPUT_FIELD_IDS;
     }
 
     public void setMobileNr(String mobileNr) {
@@ -63,15 +80,5 @@ public final class BizumAccount extends CountryBasedPaymentAccount {
     @Override
     public String getMessageForAccountCreation() {
         return "payment.bizum.info.account";
-    }
-
-    @Override
-    public @NonNull List<TradeCurrency> getSupportedCurrencies() {
-        return SUPPORTED_CURRENCIES;
-    }
-
-    @Override
-    public @NonNull List<PaymentAccountFormField.FieldId> getInputFieldIds() {
-        throw new RuntimeException("Not implemented");
     }
 }
